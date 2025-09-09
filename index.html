@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <title>Indian Potholes (Fork)</title>
+  <link rel="stylesheet" href="assets/css/style.css"/>
+  <script defer src="assets/js/app.js"></script>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  
+</head>
+<body>
+
+<nav class="site">
+  <div class="container inner">
+    <a class="brand" href="index.html">
+      <div class="logo">CS</div>
+      <div>Indian Civic Sense</div>
+    </a>
+    <ul>
+      <li><a href="upload.html">Report</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="leaderboard.html">Leaderboard</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div style="display:flex; gap:.5rem; align-items:center">
+      <span id="nav-user" class="badge" style="display:none"></span>
+      <a class="btn secondary" href="login.html">Login</a>
+      <a class="btn" href="register.html">Sign up</a>
+    </div>
+  </div>
+</nav>
+<script>
+  (function(){
+    const u = IP.currentUser();
+    const navUser = document.getElementById("nav-user");
+    if (u) {
+      navUser.style.display = "inline-block";
+      navUser.textContent = u.name || u.email;
+      const login = document.querySelector('a[href="login.html"]');
+      const reg = document.querySelector('a[href="register.html"]');
+      if (login) login.outerHTML = '<button class="btn secondary" onclick="IP.logout()">Logout</button>';
+      if (reg) reg.remove();
+    }
+    const here = location.pathname.split('/').pop();
+    document.querySelectorAll("nav a").forEach(a=>{
+      if (a.getAttribute("href") === here) a.classList.add("active");
+    });
+  })();
+</script>
+
+
+<header class="hero">
+  <div class="container grid hero grid">
+    <div class="card">
+      <span class="badge">Community</span>
+      <h1>Report & track potholes to make roads safer</h1>
+      <p>Upload photos, pin exact locations, and see community reports. This fork runs entirely in your browser using localStorage — perfect for demos & hackathons.</p>
+      <div style="display:flex; gap:.6rem; margin-top:1rem">
+        <a class="btn" href="upload.html">Report a Pothole</a>
+        <a class="btn secondary" href="gallery.html">View Gallery</a>
+      </div>
+      <div style="margin-top:1rem" class="alert">Tip: Sign up to have your problem show up on the leaderboard.</div>
+    </div>
+    <div class="card" style="margin-top:2rem;">
+      <div id="map" style="height: 320px; border-radius: 12px; overflow:hidden; z-index: 0"></div>
+      <small class="muted">Click anywhere to drop a sample marker. Map shown for demo only.</small>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="kpis">
+      <div class="kpi"><div class="value" id="k-total">0</div><div class="label">Total reports</div></div>
+      <div class="kpi"><div class="value" id="k-open">0</div><div class="label">Open</div></div>
+      <div class="kpi"><div class="value" id="k-severe">0</div><div class="label">Severe</div></div>
+      <div class="kpi"><div class="value" id="k-users">0</div><div class="label">Contributors</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container grid-3">
+    <div class="card">
+      <h3>1. Snap & Pin</h3>
+      <p class="help">Take a clear photo and pick the exact location on the map.</p>
+    </div>
+    <div class="card">
+      <h3>2. Submit</h3>
+      <p class="help">Your report is saved locally for this demo and appears in the gallery instantly.</p>
+    </div>
+    <div class="card">
+      <h3>3. Track</h3>
+      <p class="help">Leaderboard tallies reports per contributor. Replace storage with an API later.</p>
+    </div>
+  </div>
+</section>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-GZC39H8GkS9oM6T2GJrC6S2RY6Yk9gE9rC2xOZbWv8M=" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-VGgG3lX6Eusx6Q5Z5QF1T4Q3EoE5z1FMvx6bMpiKFFk=" crossorigin=""/>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    IP.renderKpis();
+    IP.initUploadPage = IP.initUploadPage || function(){};
+    const map = L.map('map').setView([20.5937, 78.9629], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19, attribution: '© OpenStreetMap'
+    }).addTo(map);
+    let marker;
+    map.on('click', (e)=>{
+      if (marker) marker.remove();
+      marker = L.marker(e.latlng).addTo(map);
+    });
+  });
+</script>
+
+
+<footer>
+  <div class="container grid">
+    <div><strong>Indian Civic Sense</strong><br>
+    <small class="muted">This is an independent, front‑end‑only code for demo/testing.</small></div>
+    <div class="links">
+      <a href="terms.html">Terms</a> ·
+      <a href="legal.html">Legal</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

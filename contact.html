@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact</title>
+  <link rel="stylesheet" href="assets/css/style.css"/>
+  <script defer src="assets/js/app.js"></script>
+  
+</head>
+<body>
+
+<nav class="site">
+  <div class="container inner">
+    <a class="brand" href="index.html">
+      <div class="logo">CS</div>
+      <div>Indian Civic Sense</div>
+    </a>
+    <ul>
+      <li><a href="upload.html">Report</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="leaderboard.html">Leaderboard</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div style="display:flex; gap:.5rem; align-items:center">
+      <span id="nav-user" class="badge" style="display:none"></span>
+      <a class="btn secondary" href="login.html">Login</a>
+      <a class="btn" href="register.html">Sign up</a>
+    </div>
+  </div>
+</nav>
+<script>
+  (function(){
+    const u = IP.currentUser();
+    const navUser = document.getElementById("nav-user");
+    if (u) {
+      navUser.style.display = "inline-block";
+      navUser.textContent = u.name || u.email;
+      const login = document.querySelector('a[href="login.html"]');
+      const reg = document.querySelector('a[href="register.html"]');
+      if (login) login.outerHTML = '<button class="btn secondary" onclick="IP.logout()">Logout</button>';
+      if (reg) reg.remove();
+    }
+    const here = location.pathname.split('/').pop();
+    document.querySelectorAll("nav a").forEach(a=>{
+      if (a.getAttribute("href") === here) a.classList.add("active");
+    });
+  })();
+</script>
+
+
+<section>
+  <div class="container">
+    <h2>Contact</h2>
+    <p class="help">This is a demo fork. Replace this with your contact workflow or an issue tracker link.</p>
+    <div class="grid-2">
+      <div class="card">
+        <form class="form">
+          <div><label>Name</label><input placeholder="Your name"/></div>
+          <div><label>Email</label><input type="email" placeholder="you@example.com"/></div>
+          <div><label>Message</label><textarea rows="4" placeholder="What's up?"></textarea></div>
+          <button class="btn" type="button" onclick="alert('For demo only — wire this to your backend or FormSubmit.');">Send</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Other links</h3>
+        <ul>
+          <li><a href="https://www.indianpotholes.com/" target="_blank" rel="noopener">Original website</a></li>
+          <li><a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="container grid">
+    <div><strong>Indian Civic Sense</strong><br>
+    <small class="muted">This is an independent, front‑end‑only code for demo/testing.</small></div>
+    <div class="links">
+      <a href="terms.html">Terms</a> ·
+      <a href="legal.html">Legal</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

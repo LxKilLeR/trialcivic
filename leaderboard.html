@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leaderboard</title>
+  <link rel="stylesheet" href="assets/css/style.css"/>
+  <script defer src="assets/js/app.js"></script>
+  
+</head>
+<body>
+
+<nav class="site">
+  <div class="container inner">
+    <a class="brand" href="index.html">
+      <div class="logo">CS</div>
+      <div>Indian Civic Sense</div>
+    </a>
+    <ul>
+      <li><a href="upload.html">Report</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="leaderboard.html">Leaderboard</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div style="display:flex; gap:.5rem; align-items:center">
+      <span id="nav-user" class="badge" style="display:none"></span>
+      <a class="btn secondary" href="login.html">Login</a>
+      <a class="btn" href="register.html">Sign up</a>
+    </div>
+  </div>
+</nav>
+<script>
+  (function(){
+    const u = IP.currentUser();
+    const navUser = document.getElementById("nav-user");
+    if (u) {
+      navUser.style.display = "inline-block";
+      navUser.textContent = u.name || u.email;
+      const login = document.querySelector('a[href="login.html"]');
+      const reg = document.querySelector('a[href="register.html"]');
+      if (login) login.outerHTML = '<button class="btn secondary" onclick="IP.logout()">Logout</button>';
+      if (reg) reg.remove();
+    }
+    const here = location.pathname.split('/').pop();
+    document.querySelectorAll("nav a").forEach(a=>{
+      if (a.getAttribute("href") === here) a.classList.add("active");
+    });
+  })();
+</script>
+
+
+<section>
+  <div class="container">
+    <h2>Top Contributors</h2>
+    <table class="table" style="margin-top:1rem">
+      <thead><tr><th>Rank</th><th>User (Email)</th><th>Reports</th></tr></thead>
+      <tbody id="lb-body">
+        <tr><td>1</td><td>Priya Sharma (priya@example.com)</td><td>12</td></tr>
+        <tr><td>2</td><td>Rahul Verma (rahul@example.com)</td><td>9</td></tr>
+        <tr><td>3</td><td>Neha Singh (neha@example.com)</td><td>7</td></tr>
+        <tr><td>4</td><td>Arjun Patel (arjun@example.com)</td><td>5</td></tr>
+        <tr><td>5</td><td>Simran Kaur (simran@example.com)</td><td>3</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<script>document.addEventListener("DOMContentLoaded", IP.initLeaderboardPage);</script>
+
+
+<footer>
+  <div class="container grid">
+    <div><strong>Indian Civic Sense</strong><br>
+    <small class="muted">This is an independent, front‑end‑only code for demo/testing.</small></div>
+    <div class="links">
+      <a href="terms.html">Terms</a> ·
+      <a href="legal.html">Legal</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
