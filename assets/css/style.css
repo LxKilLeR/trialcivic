@@ -55,7 +55,9 @@ img {
 .nav-links a.active::after {
   width: 100%;
   left: 0;
+
 }
+
 
 .container {
   width: min(1100px, 92%);
@@ -95,6 +97,10 @@ img {
   font-weight: 600;
 }
 
+.nav-links a.active {
+  color: #16a34a
+}
+
 nav.site {
   position: sticky;
   top: 0;
@@ -111,6 +117,7 @@ nav .inner {
   gap: 1rem;
   padding: .8rem 0;
 }
+
 
 .brand {
   display: flex;
